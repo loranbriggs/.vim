@@ -1,3 +1,11 @@
+"##############################################################################
+" Set up Vundle
+" To install bundles:
+"
+"   :BundleInstall
+"
+"##############################################################################
+
 filetype on
 filetype off
 set nocompatible
@@ -13,15 +21,16 @@ Bundle 'gmarik/vundle'
 Bundle 'git://git.wincent.com/command-t.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
+Bundle 'honza/vim-snippets'
+
+" ##### End Vundle #####
 
 
-set mouse=a
 set number
 
 " change the mapleader from \ to ,
 let mapleader=","
-set backspace=indent,eol,start
-                  " allow backspacing over everything in insert mode
+set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set ruler         " show line and column
 set tabstop=2     " a tab is x spaces
 set shiftwidth=2  " number of spaces to use for autoindenting
@@ -49,12 +58,15 @@ set nobackup
 set colorcolumn=80 " indicates 80 character wide
 " highlight ColorColumn guibg=firebrick
 
-set lines=40 columns=85
+set lines=40 columns=85   " set default size of window
 
 set directory=~/tmp/
 
-"filetype plugin indent on
+"##############################################################################
+" Color Themes
+"##############################################################################
 
+" set dark or light theme
 function! LightTheme()
   set background=light
   colorscheme solarized
@@ -75,18 +87,31 @@ if &t_Co > 2 || has("gui_running")
    syntax on
 endif
 
-if has("gui_running")
-    set guifont=Courier\ New:h16
+"##############################################################################
+" GUI settings
+"##############################################################################
+set mouse=a
+
+if has("gui_running")               " Set font if runing in GUI
+    set guioptions-=m               " remove menu
+    set guioptions-=T               " remove toolbar
+    if has("gui_macvim")
+      set guifont=Courier\ New:h16
+    else
+      set guifont=Inconsolata\ 12
+    endif
 endif
 
 set list
-set listchars=tab:>.,trail:!,extends:#,nbsp:!       " shows tabs and trailing sp
+set listchars=tab:>.,trail:!,extends:#,nbsp:!    " shows tabs and trailing sp
 autocmd filetype html,xml set listchars-=tab:>.
 
+"##############################################################################
 " key maping
+"##############################################################################
 
-nnoremap ; :
-imap ;; <Esc>
+nnoremap ; :                        " map colon(:) to semi-colon(;)
+imap ;; <Esc>                       " map double colong to Esc
 imap <S-Tab> <C-d>
 nmap <silent> ,/ :nohlsearch<CR>
 cmap w!! w !sudo tee % >/dev/null
@@ -103,15 +128,40 @@ map <leader>f /def<CR>
 " refresh before opening command t
 map <leader>t :CommandTFlush<cr>\|:CommandT<cr>
 
-" highlights when text goes beyond 80 characters
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%81v.\+/
-
 " pressing < or > will indent/unident
 vnoremap < <gv
 vnoremap > >gv
 
-" Syntax highlight for .ejs files in vim
+"##############################################################################
+" Smart tab completion
+"##############################################################################
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+
+inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+
+"##############################################################################
+" Syntax Highlighting
+"##############################################################################
+
 au BufNewFile,BufRead *.ejs set filetype=js
 au BufNewFile,BufRead *.ejs set filetype=html
 
