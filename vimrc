@@ -1,10 +1,23 @@
-" save this in home direcotry as .vimrc
-call pathogen#infect()
+filetype on
+filetype off
+set nocompatible
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle, required
+Bundle 'gmarik/vundle'
+
+" Bundles
+Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tpope/vim-surround'
+
 
 set mouse=a
 set number
 
-set nocompatible
 " change the mapleader from \ to ,
 let mapleader=","
 set backspace=indent,eol,start
