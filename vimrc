@@ -93,12 +93,19 @@ endif
 set mouse=a
 
 if has("gui_running")               " Set font if runing in GUI
-    set guioptions-=m               " remove menu
-    set guioptions-=T               " remove toolbar
     if has("gui_macvim")
       set guifont=Courier\ New:h16
     else
       set guifont=Inconsolata\ 12
+      set guioptions-=m               " remove menu
+      set guioptions-=T               " remove toolbar
+      vnoremap <C-X> "+x
+      vnoremap <C-C> "+y
+      vnoremap <C-V> "+gP
+      noremap <C-Q> <C-V>
+      set paste
+      vmap <C-v> c<ESC>"+p
+      imap <C-v> <ESC>"+pa
     endif
 endif
 
@@ -109,9 +116,10 @@ autocmd filetype html,xml set listchars-=tab:>.
 "##############################################################################
 " key maping
 "##############################################################################
-
-nnoremap ; :                        " map colon(:) to semi-colon(;)
-imap ;; <Esc>                       " map double colong to Esc
+" map colon(:) to semi-colon(;)
+nnoremap ;
+" map double colong to Esc
+imap ;; <Esc>
 imap <S-Tab> <C-d>
 nmap <silent> ,/ :nohlsearch<CR>
 cmap w!! w !sudo tee % >/dev/null
