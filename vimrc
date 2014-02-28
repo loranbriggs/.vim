@@ -5,7 +5,6 @@
 "   :BundleInstall
 "
 "##############################################################################
-
 filetype on
 filetype off
 set nocompatible
@@ -18,19 +17,21 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles
-Bundle 'git://git.wincent.com/command-t.git'
+<<<<<<< HEAD
+Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
-Bundle 'honza/vim-snippets'
+
+filetype plugin indent on     " required for vundle
 
 " ##### End Vundle #####
-
 
 set number
 
 " change the mapleader from \ to ,
 let mapleader=","
-set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
 set ruler         " show line and column
 set tabstop=2     " a tab is x spaces
 set shiftwidth=2  " number of spaces to use for autoindenting
@@ -58,15 +59,13 @@ set nobackup
 set colorcolumn=80 " indicates 80 character wide
 " highlight ColorColumn guibg=firebrick
 
-set lines=40 columns=85   " set default size of window
-
+set lines=40 columns=85
 set directory=~/tmp/
 
 "##############################################################################
 " Color Themes
 "##############################################################################
 
-" set dark or light theme
 function! LightTheme()
   set background=light
   colorscheme solarized
@@ -77,20 +76,22 @@ function! DarkTheme()
   let g:molokai_original = 1
 endfunction
 
+
+"##############################################################################
+" GUI settings
+"##############################################################################
+
+set mouse=a
+
 if &t_Co >= 256 || has("gui_running")
-  set background=light
-  colorscheme solarized
+  " set background=light
+  " colorscheme solarized
 endif
 
 if &t_Co > 2 || has("gui_running")
    " switch syntax highlighting on, when the terminal has colors
    syntax on
 endif
-
-"##############################################################################
-" GUI settings
-"##############################################################################
-set mouse=a
 
 if has("gui_running")               " Set font if runing in GUI
     if has("gui_macvim")
@@ -117,6 +118,7 @@ autocmd filetype html,xml set listchars-=tab:>.
 " key maping
 "##############################################################################
 " map colon(:) to semi-colon(;)
+nnoremap ; :
 nnoremap ;
 " map double colong to Esc
 imap ;; <Esc>
@@ -174,8 +176,8 @@ au BufNewFile,BufRead *.ejs set filetype=js
 au BufNewFile,BufRead *.ejs set filetype=html
 
 " open NERD tree on start up, switch to main window
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * wincmd p
 
 "##############################################################################
 " Easier split navigation
