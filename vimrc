@@ -96,7 +96,7 @@ if has("gui_running")               " Set font if runing in GUI
     if has("gui_macvim")
       set guifont=Courier\ New:h16
     else
-      set guifont=Inconsolata\ 12
+      set guifont=Monospace\ 12
       set guioptions-=m               " remove menu
       set guioptions-=T               " remove toolbar
       vnoremap <C-X> "+x
@@ -133,9 +133,6 @@ map td :tabclose<CR>
 map th :tabprevious<CR>
 map tl :tabnext<CR>
 map <leader>f /def<CR>
-
-" refresh before opening command t
-map <leader>t :CommandTFlush<cr>\|:CommandT<cr>
 
 " pressing < or > will indent/unident
 vnoremap < <gv
