@@ -17,7 +17,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles
-<<<<<<< HEAD
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
