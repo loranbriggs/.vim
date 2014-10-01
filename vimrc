@@ -53,7 +53,7 @@ set nobackup
 
 set colorcolumn=80              " indicates 80 character wide
 
-set lines=40 columns=95
+set lines=40 columns=105
 set directory=~/tmp/
 
 "##############################################################################
@@ -140,8 +140,11 @@ nmap <silent> <c-l> :wincmd l<CR>
 " allow the . to execute once for each line of a visual selection
 vnoremap . :normal .<CR>
 
-" open NERD tree on start up, switch to main window
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd BufEnter * NERDTreeMirror
+"##############################################################################
+" NERDTree settings
+"##############################################################################
+let g:NERDTreeWinSize=20          "set width
+autocmd VimEnter * NERDTree       "open on start up
+autocmd VimEnter * wincmd p       "switch to main window
+autocmd BufEnter * NERDTreeMirror "open on new tab
 
