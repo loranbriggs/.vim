@@ -16,26 +16,24 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles
-Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 
 filetype plugin indent on     " required for vundle
 
-" ##### End Vundle #####
-
+"##############################################################################
+" Editor settings
+"##############################################################################
 set number
+let mapleader="," " change the mapleader from \ to ,
 
-" change the mapleader from \ to ,
-let mapleader=","
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-set ruler         " show line and column
-set tabstop=2     " a tab is x spaces
-set shiftwidth=2  " number of spaces to use for autoindenting
-set expandtab     " use spaes instead of tabs
+set backspace=indent,eol,start  " allow backspacing over in insert mode
+set ruler                       " show line and column
+set tabstop=2                   " a tab is x spaces
+set shiftwidth=2                " number of spaces to use for autoindenting
+set expandtab                   " use spaes instead of tabs
 set autoindent
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+set shiftround                  " use multiple of shiftwidth with '<' and '>'
 function! Tabwidth4()
     set tabstop=4
     set shiftwidth=4
@@ -44,20 +42,18 @@ function! Tabwidth2()
     set tabstop=2
     set shiftwidth=2
 endfunction
-set showmatch     " set show matching parenthesis
-set ignorecase    " ignore case when searching
-set smartcase     " ignore case if search pattern is all lowercase,
-                  "    case-sensitive otherwise
-set hlsearch      " highlight search terms
-set incsearch     " show search matches as you type
+set showmatch                   " set show matching parenthesis
+set ignorecase                  " ignore case when searching
+set smartcase                   " ignore case if search is all lowercase,
+set hlsearch                    " highlight search terms
+set incsearch                   " show search matches as you type
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set noerrorbells  " don't beep
+set noerrorbells                " don't beep
 set nobackup
 
-set colorcolumn=80 " indicates 80 character wide
-" highlight ColorColumn guibg=firebrick
+set colorcolumn=80              " indicates 80 character wide
 
-set lines=40 columns=85
+set lines=40 columns=95
 set directory=~/tmp/
 
 "##############################################################################
@@ -117,8 +113,6 @@ autocmd filetype html,xml set listchars-=tab:>.
 "##############################################################################
 " map colon(:) to semi-colon(;)
 nnoremap ; :
-nnoremap ;
-" map double colong to Esc
 imap ;; <Esc>
 imap <S-Tab> <C-d>
 nmap <silent> ,/ :nohlsearch<CR>
@@ -137,47 +131,6 @@ map <leader>f /def<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-"##############################################################################
-" Smart tab completion
-"##############################################################################
-function! Smart_TabComplete()
-  let line = getline('.')                         " current line
-
-  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
-                                                  " line to one character right
-                                                  " of the cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty string
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_period && !has_slash)
-    return "\<C-X>\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  else
-    return "\<C-X>\<C-O>"                         " plugin matching
-  endif
-endfunction
-
-inoremap <tab> <c-r>=Smart_TabComplete()<CR>
-
-"##############################################################################
-" Syntax Highlighting
-"##############################################################################
-
-au BufNewFile,BufRead *.ejs set filetype=js
-au BufNewFile,BufRead *.ejs set filetype=html
-
-" open NERD tree on start up, switch to main window
-" autocmd VimEnter * NERDTree
-" autocmd VimEnter * wincmd p
-
-"##############################################################################
-" Easier split navigation
-"##############################################################################
-
 " Use ctrl-[hjkl] to select the active split
 nmap <silent> <c-k> :wincmd k<CR>
 nmap <silent> <c-j> :wincmd j<CR>
@@ -186,3 +139,9 @@ nmap <silent> <c-l> :wincmd l<CR>
 
 " allow the . to execute once for each line of a visual selection
 vnoremap . :normal .<CR>
+
+" open NERD tree on start up, switch to main window
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd BufEnter * NERDTreeMirror
+
