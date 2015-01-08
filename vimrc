@@ -60,14 +60,13 @@ set directory=~/tmp/
 " Color Themes
 "##############################################################################
 
-function! LightTheme()
+function! Light()
   set background=light
   colorscheme solarized
 endfunction
 
-function! DarkTheme()
+function! Dark()
   colorscheme molokai
-  let g:molokai_original = 1
 endfunction
 
 
@@ -148,3 +147,8 @@ autocmd VimEnter * NERDTree       "open on start up
 autocmd VimEnter * wincmd p       "switch to main window
 autocmd BufEnter * NERDTreeMirror "open on new tab
 
+"##############################################################################
+" Java settings
+"##############################################################################
+" ! javac %
+" ! java %:r
