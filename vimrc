@@ -19,6 +19,8 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
 
+call vundle#end()
+
 filetype plugin indent on     " required for vundle
 
 "##############################################################################
@@ -29,8 +31,8 @@ let mapleader="," " change the mapleader from \ to ,
 
 set backspace=indent,eol,start  " allow backspacing over in insert mode
 set ruler                       " show line and column
-set tabstop=2                   " a tab is x spaces
-set shiftwidth=2                " number of spaces to use for autoindenting
+set tabstop=4                   " a tab is x spaces
+set shiftwidth=4                " number of spaces to use for autoindenting
 set expandtab                   " use spaes instead of tabs
 set autoindent
 set shiftround                  " use multiple of shiftwidth with '<' and '>'
@@ -87,6 +89,8 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 if has("gui_running")               " Set font if runing in GUI
+    let g:molokai_original = 1
+    colorscheme molokai
     if has("gui_macvim")
       set guifont=Courier\ New:h16
     else
@@ -152,3 +156,8 @@ autocmd BufEnter * NERDTreeMirror "open on new tab
 "##############################################################################
 " ! javac %
 " ! java %:r
+
+"##############################################################################
+" C++ settings
+"##############################################################################
+map gl :!g++ % -o %:r -lGL -lGLU -lglut
